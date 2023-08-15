@@ -1,0 +1,3 @@
+.idea/
+internal/adapters/maxmind/tmp/
+*.mmdb
