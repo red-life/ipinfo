@@ -6,24 +6,24 @@ import (
 )
 
 type Continent struct {
-	Code string
-	Name string
+	Code string `json:"code"`
+	Name string `json:"name"`
 }
 
 type Country struct {
-	ISOCode string
-	Name    string
+	ISOCode string `json:"iso_code"`
+	Name    string `json:"name"`
 }
 
 type City struct {
-	Latitude  float32
-	Longitude float32
-	TimeZone  string
+	Latitude  float32 `json:"latitude"`
+	Longitude float32 `json:"longitude"`
+	TimeZone  string  `json:"time_zone"`
 }
 
 type ASN struct {
-	Number       uint
-	Organization string
+	Number       uint   `json:"number"`
+	Organization string `json:"organization"`
 }
 
 type IMaxMind interface {
