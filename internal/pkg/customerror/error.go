@@ -1,5 +1,9 @@
 package customerror
 
+import "errors"
+
 var (
-	NotFound error
+	NotFoundErr     = errors.New("Sadge")
+	NotSupportedErr = errors.New("")
+	GeneralErr      = errors.New("")
 )
