@@ -2,8 +2,8 @@ package maxmind
 
 import (
 	"github.com/oschwald/maxminddb-golang"
-	"github.com/red-life/ip-info/internal/pkg/customerror"
-	"github.com/red-life/ip-info/internal/ports"
+	"github.com/red-life/ipinfo/internal/pkg/customerror"
+	"github.com/red-life/ipinfo/internal/ports"
 	"github.com/stretchr/testify/assert"
 	"net"
 	"testing"
@@ -83,7 +83,7 @@ func TestMaxMind_GetCity(t *testing.T) {
 			expected: struct {
 				city ports.City
 				err  error
-			}{city: ports.City{Latitude: 35.698, Longitude: 51.4115, TimeZone: "Asia/Tehran"}, err: customerror.NotFound},
+			}{city: ports.City{Latitude: 35.698, Longitude: 51.4115, TimeZone: "Asia/Tehran"}, err: customerror.NotFoundErr},
 		},
 		{
 			arg1: net.ParseIP("46.143.100.70"),
@@ -125,7 +125,7 @@ func TestMaxMind_GetContinent(t *testing.T) {
 			expected: struct {
 				continent ports.Continent
 				err       error
-			}{continent: ports.Continent{}, err: customerror.NotFound},
+			}{continent: ports.Continent{}, err: customerror.NotFoundErr},
 		},
 		{
 			arg1: net.ParseIP("185.143.234.200"),

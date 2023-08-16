@@ -2,8 +2,8 @@ package maxmind
 
 import (
 	"github.com/oschwald/maxminddb-golang"
-	"github.com/red-life/ip-info/internal/pkg/customerror"
-	"github.com/red-life/ip-info/internal/ports"
+	"github.com/red-life/ipinfo/internal/pkg/customerror"
+	"github.com/red-life/ipinfo/internal/ports"
 	"net"
 )
 
@@ -58,7 +58,7 @@ func (m *MaxMind) GetContinent(ip net.IP) (ports.Continent, error) {
 		return ports.Continent{}, err
 	}
 	if record.Continent.Code == "" || record.Continent.Names.En == "" {
-		return ports.Continent{}, customerror.NotFound
+		return ports.Continent{}, customerror.NotFoundErr
 	}
 	return ports.Continent{
 		Code: record.Continent.Code,
@@ -73,7 +73,7 @@ func (m *MaxMind) GetCountry(ip net.IP) (ports.Country, error) {
 		return ports.Country{}, err
 	}
 	if record.RegisteredCountry.ISOCode == "" || record.RegisteredCountry.Names.En == "" {
-		return ports.Country{}, customerror.NotFound
+		return ports.Country{}, customerror.NotFoundErr
 	}
 	return ports.Country{
 		ISOCode: record.RegisteredCountry.ISOCode,
@@ -88,7 +88,7 @@ func (m *MaxMind) GetCity(ip net.IP) (ports.City, error) {
 		return ports.City{}, err
 	}
 	if record.Location.TimeZone == "" || record.Location.Latitude == 0 || record.Location.Longitude == 0 {
-		return ports.City{}, customerror.NotFound
+		return ports.City{}, customerror.NotFoundErr
 	}
 	return ports.City{
 		Latitude:  record.Location.Latitude,
@@ -104,7 +104,7 @@ func (m *MaxMind) GetASN(ip net.IP) (ports.ASN, error) {
 		return ports.ASN{}, err
 	}
 	if record.Organization == "" || record.Number == 0 {
-		return ports.ASN{}, customerror.NotFound
+		return ports.ASN{}, customerror.NotFoundErr
 	}
 	return ports.ASN{
 		Organization: record.Organization,
