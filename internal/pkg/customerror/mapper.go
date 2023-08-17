@@ -7,6 +7,8 @@ import (
 
 func MaxMindToCustom(err error) error {
 	switch {
+	case errors.Is(err, NotSupportedErr) || errors.Is(err, NotFoundErr):
+		return err
 	default:
 		return GeneralErr
 	}
