@@ -24,7 +24,7 @@ type IPInfoHandler struct {
 
 func (I *IPInfoHandler) Info(c *gin.Context) {
 	response := make(map[string]any)
-	remoteIP := c.Param("ip")
+	remoteIP := c.Param("ip")[1:]
 	if remoteIP == "" {
 		remoteIP = c.RemoteIP()
 	}
