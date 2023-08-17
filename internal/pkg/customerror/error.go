@@ -3,7 +3,7 @@ package customerror
 import "errors"
 
 var (
-	NotFoundErr     = errors.New("Sadge")
-	NotSupportedErr = errors.New("")
-	GeneralErr      = errors.New("")
+	NotFoundErr     = errors.New("not found")
+	NotSupportedErr = errors.New("not supported")
+	GeneralErr      = errors.New("general error")
 )
