@@ -9,6 +9,7 @@ import (
 	"github.com/red-life/ipinfo/internal/adapters/http"
 	"github.com/red-life/ipinfo/internal/adapters/maxmind"
 	"github.com/red-life/ipinfo/internal/services"
+	"github.com/red-life/ipinfo/internal/utils"
 	"os"
 	"path"
 	"strconv"
@@ -38,7 +39,7 @@ func getEnv() (host string, port uint16, mmdbFiles string, isDev bool, err error
 	}
 	port = uint16(intPort)
 	mmdbFiles = os.Getenv("mmdb_files")
-	isDev = os.Getenv("is_dev") == "1"
+	isDev = utils.StringToBool(os.Getenv("is_dev"))
 	return
 }
 
