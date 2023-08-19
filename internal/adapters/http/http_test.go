@@ -32,7 +32,10 @@ func TestIPInfoHandler_Info(t *testing.T) {
 	ipInfoService := mocks.IIPInfo{}
 	ipInfoHandler := NewIPInfoHandler(&ipInfoService)
 	RegisterRoutes(engine, ipInfoHandler)
-	ipInfoService.EXPECT().Info(net.ParseIP("185.143.233.200"), true, true, false, false).Return(ports.Info{}, nil)
+	ipInfoService.EXPECT().Info(net.ParseIP("185.143.233.200"), true, true, false, false).Return(ports.Info{
+		Continent: &ports.Continent{},
+		Country:   &ports.Country{},
+	}, nil)
 	_, response, _ := getResponse(engine, "GET", "/185.143.233.200?continent=true&country=1&city=false&asn=0", nil)
 	jsonResponse, err := toJson(response)
 	if err != nil {
@@ -40,6 +43,14 @@ func TestIPInfoHandler_Info(t *testing.T) {
 	}
 	_, exists := jsonResponse["error"]
 	assert.False(t, exists, "Expected to have no errors")
+	_, exists = jsonResponse["continent"]
+	assert.True(t, exists, "Expected to have continent in response")
+	_, exists = jsonResponse["country"]
+	assert.True(t, exists, "Expected to have country in response")
+	_, exists = jsonResponse["asn"]
+	assert.False(t, exists, "Expected not to have asn in response")
+	_, exists = jsonResponse["city"]
+	assert.False(t, exists, "Expected not to have city in response")
 }
 
 func TestIPInfoHandler_ShortInfo(t *testing.T) {

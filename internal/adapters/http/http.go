@@ -44,7 +44,7 @@ func (I *IPInfoHandler) Info(c *gin.Context) {
 		c.JSON(customerror.ErrorToStatusCode(err), response)
 		return
 	}
-	c.JSON(http.StatusOK, info)
+	c.JSON(http.StatusOK, &info)
 	return
 }
 

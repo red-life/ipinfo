@@ -3,11 +3,11 @@ package ports
 import "net"
 
 type Info struct {
-	IP        string    `json:"ip"`
-	Continent Continent `json:"continent,omitempty"`
-	Country   Country   `json:"country,omitempty"`
-	City      City      `json:"city,omitempty"`
-	ASN       ASN       `json:"asn,omitempty"`
+	IP        string     `json:"ip"`
+	Continent *Continent `json:"continent,omitempty"`
+	Country   *Country   `json:"country,omitempty"`
+	City      *City      `json:"city,omitempty"`
+	ASN       *ASN       `json:"asn,omitempty"`
 }
 
 type ShortInfo struct {

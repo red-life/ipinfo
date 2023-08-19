@@ -21,44 +21,37 @@ func (I *IPInfo) Info(ip net.IP, continent bool, country bool, city bool, asn bo
 	if ip.To4() == nil {
 		return ports.Info{}, customerror.NotSupportedErr
 	}
-	var (
-		continentInfo ports.Continent
-		countryInfo   ports.Country
-		cityInfo      ports.City
-		asnInfo       ports.ASN
-		err           error
-	)
+	var info ports.Info
+	info.IP = ip.String()
 	if continent {
-		continentInfo, err = I.mm.GetContinent(ip)
+		continentInfo, err := I.mm.GetContinent(ip)
 		if err != nil {
 			return ports.Info{}, customerror.MaxMindToCustom(err)
 		}
+		info.Continent = &continentInfo
 	}
 	if country {
-		countryInfo, err = I.mm.GetCountry(ip)
+		countryInfo, err := I.mm.GetCountry(ip)
 		if err != nil {
 			return ports.Info{}, customerror.MaxMindToCustom(err)
 		}
+		info.Country = &countryInfo
 	}
 	if city {
-		cityInfo, err = I.mm.GetCity(ip)
+		cityInfo, err := I.mm.GetCity(ip)
 		if err != nil {
 			return ports.Info{}, customerror.MaxMindToCustom(err)
 		}
+		info.City = &cityInfo
 	}
 	if asn {
-		asnInfo, err = I.mm.GetASN(ip)
+		asnInfo, err := I.mm.GetASN(ip)
 		if err != nil {
 			return ports.Info{}, customerror.MaxMindToCustom(err)
 		}
+		info.ASN = &asnInfo
 	}
-	return ports.Info{
-		IP:        ip.String(),
-		Continent: continentInfo,
-		Country:   countryInfo,
-		City:      cityInfo,
-		ASN:       asnInfo,
-	}, nil
+	return info, nil
 }
 
 func (I *IPInfo) ShortInfo(ip net.IP) (ports.ShortInfo, error) {
