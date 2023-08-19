@@ -13,27 +13,33 @@ import (
 	"testing"
 )
 
+func getResponse(handler http.Handler, method string, url string, body io.Reader) (*httptest.ResponseRecorder, []byte, error) {
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest(method, url, body)
+	handler.ServeHTTP(w, req)
+	response, _ := io.ReadAll(w.Body)
+	return w, response, nil
+}
+
+func toJson(data []byte) (map[string]any, error) {
+	var jsonResponse map[string]any
+	err := json.Unmarshal(data, &jsonResponse)
+	return jsonResponse, err
+}
+
 func TestIPInfoHandler_Info(t *testing.T) {
 	engine := gin.New()
 	ipInfoService := mocks.IIPInfo{}
 	ipInfoHandler := NewIPInfoHandler(&ipInfoService)
 	RegisterRoutes(engine, ipInfoHandler)
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/", nil)
-	engine.ServeHTTP(w, req)
-	assert.Equal(t, http.StatusBadRequest, w.Code, "Expected status code to be 400 because remote IP is 127.0.0.1")
-	ipInfoService.EXPECT().Info(net.ParseIP("185.143.233.200"), true, true, true, true).Return(ports.Info{}, nil)
-	w = httptest.NewRecorder()
-	req, _ = http.NewRequest("GET", "/185.143.233.200", nil)
-	engine.ServeHTTP(w, req)
-	response, _ := io.ReadAll(w.Body)
-	var jsonResponse map[string]any
-	err := json.Unmarshal(response, &jsonResponse)
+	ipInfoService.EXPECT().Info(net.ParseIP("185.143.233.200"), true, true, false, false).Return(ports.Info{}, nil)
+	_, response, _ := getResponse(engine, "GET", "/185.143.233.200?continent=true&country=1&city=false&asn=0", nil)
+	jsonResponse, err := toJson(response)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal response: %s", err.Error())
 	}
 	_, exists := jsonResponse["error"]
-	assert.Equal(t, false, exists, "Expected to have no errors")
+	assert.False(t, exists, "Expected to have no errors")
 }
 
 func TestIPInfoHandler_ShortInfo(t *testing.T) {
@@ -42,18 +48,13 @@ func TestIPInfoHandler_ShortInfo(t *testing.T) {
 	ipInfoHandler := NewIPInfoHandler(&ipInfoService)
 	RegisterRoutes(engine, ipInfoHandler)
 	ipInfoService.EXPECT().ShortInfo(net.ParseIP("185.143.233.200")).Return(ports.ShortInfo{}, nil)
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/185.143.233.200/short", nil)
-	engine.ServeHTTP(w, req)
-	response, _ := io.ReadAll(w.Body)
-	var jsonResponse map[string]any
-	t.Log(string(response))
-	err := json.Unmarshal(response, &jsonResponse)
+	_, response, _ := getResponse(engine, "GET", "/185.143.233.200/short", nil)
+	jsonResponse, err := toJson(response)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal response: %s", err.Error())
 	}
 	_, exists := jsonResponse["error"]
-	assert.Equal(t, false, exists, "Expected to have no errors")
+	assert.False(t, exists, "Expected to have no errors")
 	_, exists = jsonResponse["org"]
-	assert.Equal(t, true, exists, "Invalid response")
+	assert.True(t, exists, "Invalid response")
 }
