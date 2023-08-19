@@ -63,7 +63,7 @@ func (I *IPInfo) ShortInfo(ip net.IP) (ports.ShortInfo, error) {
 		IP:           ip.String(),
 		Continent:    fmt.Sprintf("%s (%s)", info.Continent.Name, info.Continent.Code),
 		Country:      fmt.Sprintf("%s (%s)", info.Country.Name, info.Country.ISOCode),
-		Location:     fmt.Sprintf("%f, %f", info.City.Latitude, info.City.Latitude),
+		Location:     fmt.Sprintf("%f, %f", info.City.Latitude, info.City.Longitude),
 		TimeZone:     info.City.TimeZone,
 		Organization: fmt.Sprintf("AS%d %s", info.ASN.Number, info.ASN.Organization),
 	}, nil
