@@ -10,6 +10,9 @@ func ValidateIP(c *gin.Context) {
 	response := make(map[string]any)
 	remoteIP := c.Param("ip")
 	if remoteIP == "" {
+		remoteIP = c.GetHeader("X-Real-IP")
+	}
+	if remoteIP == "" {
 		remoteIP = c.RemoteIP()
 	}
 	ip := net.ParseIP(remoteIP)
