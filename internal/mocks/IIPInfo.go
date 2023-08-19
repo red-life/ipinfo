@@ -23,19 +23,75 @@ func (_m *IIPInfo) EXPECT() *IIPInfo_Expecter {
 	return &IIPInfo_Expecter{mock: &_m.Mock}
 }
 
-// GetInfo provides a mock function with given fields: ip
-func (_m *IIPInfo) GetInfo(ip net.IP) (ports.Info, error) {
-	ret := _m.Called(ip)
+// Info provides a mock function with given fields: ip, continent, country, city, asn
+func (_m *IIPInfo) Info(ip net.IP, continent bool, country bool, city bool, asn bool) (ports.Info, error) {
+	ret := _m.Called(ip, continent, country, city, asn)
 
 	var r0 ports.Info
 	var r1 error
-	if rf, ok := ret.Get(0).(func(net.IP) (ports.Info, error)); ok {
-		return rf(ip)
+	if rf, ok := ret.Get(0).(func(net.IP, bool, bool, bool, bool) (ports.Info, error)); ok {
+		return rf(ip, continent, country, city, asn)
 	}
-	if rf, ok := ret.Get(0).(func(net.IP) ports.Info); ok {
-		r0 = rf(ip)
+	if rf, ok := ret.Get(0).(func(net.IP, bool, bool, bool, bool) ports.Info); ok {
+		r0 = rf(ip, continent, country, city, asn)
 	} else {
 		r0 = ret.Get(0).(ports.Info)
+	}
+
+	if rf, ok := ret.Get(1).(func(net.IP, bool, bool, bool, bool) error); ok {
+		r1 = rf(ip, continent, country, city, asn)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// IIPInfo_Info_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Info'
+type IIPInfo_Info_Call struct {
+	*mock.Call
+}
+
+// Info is a helper method to define mock.On call
+//   - ip net.IP
+//   - continent bool
+//   - country bool
+//   - city bool
+//   - asn bool
+func (_e *IIPInfo_Expecter) Info(ip interface{}, continent interface{}, country interface{}, city interface{}, asn interface{}) *IIPInfo_Info_Call {
+	return &IIPInfo_Info_Call{Call: _e.mock.On("Info", ip, continent, country, city, asn)}
+}
+
+func (_c *IIPInfo_Info_Call) Run(run func(ip net.IP, continent bool, country bool, city bool, asn bool)) *IIPInfo_Info_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run(args[0].(net.IP), args[1].(bool), args[2].(bool), args[3].(bool), args[4].(bool))
+	})
+	return _c
+}
+
+func (_c *IIPInfo_Info_Call) Return(_a0 ports.Info, _a1 error) *IIPInfo_Info_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
+func (_c *IIPInfo_Info_Call) RunAndReturn(run func(net.IP, bool, bool, bool, bool) (ports.Info, error)) *IIPInfo_Info_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// ShortInfo provides a mock function with given fields: ip
+func (_m *IIPInfo) ShortInfo(ip net.IP) (ports.ShortInfo, error) {
+	ret := _m.Called(ip)
+
+	var r0 ports.ShortInfo
+	var r1 error
+	if rf, ok := ret.Get(0).(func(net.IP) (ports.ShortInfo, error)); ok {
+		return rf(ip)
+	}
+	if rf, ok := ret.Get(0).(func(net.IP) ports.ShortInfo); ok {
+		r0 = rf(ip)
+	} else {
+		r0 = ret.Get(0).(ports.ShortInfo)
 	}
 
 	if rf, ok := ret.Get(1).(func(net.IP) error); ok {
@@ -47,30 +103,30 @@ func (_m *IIPInfo) GetInfo(ip net.IP) (ports.Info, error) {
 	return r0, r1
 }
 
-// IIPInfo_GetInfo_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetInfo'
-type IIPInfo_GetInfo_Call struct {
+// IIPInfo_ShortInfo_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'ShortInfo'
+type IIPInfo_ShortInfo_Call struct {
 	*mock.Call
 }
 
-// GetInfo is a helper method to define mock.On call
+// ShortInfo is a helper method to define mock.On call
 //   - ip net.IP
-func (_e *IIPInfo_Expecter) GetInfo(ip interface{}) *IIPInfo_GetInfo_Call {
-	return &IIPInfo_GetInfo_Call{Call: _e.mock.On("GetInfo", ip)}
+func (_e *IIPInfo_Expecter) ShortInfo(ip interface{}) *IIPInfo_ShortInfo_Call {
+	return &IIPInfo_ShortInfo_Call{Call: _e.mock.On("ShortInfo", ip)}
 }
 
-func (_c *IIPInfo_GetInfo_Call) Run(run func(ip net.IP)) *IIPInfo_GetInfo_Call {
+func (_c *IIPInfo_ShortInfo_Call) Run(run func(ip net.IP)) *IIPInfo_ShortInfo_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		run(args[0].(net.IP))
 	})
 	return _c
 }
 
-func (_c *IIPInfo_GetInfo_Call) Return(_a0 ports.Info, _a1 error) *IIPInfo_GetInfo_Call {
+func (_c *IIPInfo_ShortInfo_Call) Return(_a0 ports.ShortInfo, _a1 error) *IIPInfo_ShortInfo_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *IIPInfo_GetInfo_Call) RunAndReturn(run func(net.IP) (ports.Info, error)) *IIPInfo_GetInfo_Call {
+func (_c *IIPInfo_ShortInfo_Call) RunAndReturn(run func(net.IP) (ports.ShortInfo, error)) *IIPInfo_ShortInfo_Call {
 	_c.Call.Return(run)
 	return _c
 }

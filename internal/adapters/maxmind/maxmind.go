@@ -15,7 +15,7 @@ func NewMaxMind(countryReader *maxminddb.Reader, cityReader *maxminddb.Reader, a
 	}
 }
 
-type ContinentRecord struct {
+type continentRecord struct {
 	Continent struct {
 		Code  string `maxminddb:"code"`
 		Names struct {
@@ -24,7 +24,7 @@ type ContinentRecord struct {
 	} `maxminddb:"continent"`
 }
 
-type CountryRecord struct {
+type countryRecord struct {
 	RegisteredCountry struct {
 		ISOCode string `maxminddb:"iso_code"`
 		Names   struct {
@@ -33,14 +33,14 @@ type CountryRecord struct {
 	} `maxminddb:"registered_country"`
 }
 
-type CityRecord struct {
+type cityRecord struct {
 	Location struct {
 		Latitude  float32 `maxminddb:"latitude"`
 		Longitude float32 `maxminddb:"longitude"`
 		TimeZone  string  `maxminddb:"time_zone"`
 	} `maxminddb:"location"`
 }
-type ASNRecord struct {
+type asnRecord struct {
 	Number       uint   `maxminddb:"autonomous_system_number"`
 	Organization string `maxminddb:"autonomous_system_organization"`
 }
@@ -52,7 +52,7 @@ type MaxMind struct {
 }
 
 func (m *MaxMind) GetContinent(ip net.IP) (ports.Continent, error) {
-	var record ContinentRecord
+	var record continentRecord
 	err := m.cityReader.Lookup(ip, &record)
 	if err != nil {
 		return ports.Continent{}, err
@@ -67,8 +67,8 @@ func (m *MaxMind) GetContinent(ip net.IP) (ports.Continent, error) {
 }
 
 func (m *MaxMind) GetCountry(ip net.IP) (ports.Country, error) {
-	var record CountryRecord
-	err := m.countryReader.Lookup(ip, &record)
+	var record countryRecord
+	err := m.cityReader.Lookup(ip, &record) // using cityReader because city maxmind db is more accurate
 	if err != nil {
 		return ports.Country{}, err
 	}
@@ -82,7 +82,7 @@ func (m *MaxMind) GetCountry(ip net.IP) (ports.Country, error) {
 }
 
 func (m *MaxMind) GetCity(ip net.IP) (ports.City, error) {
-	var record CityRecord
+	var record cityRecord
 	err := m.cityReader.Lookup(ip, &record)
 	if err != nil {
 		return ports.City{}, err
@@ -98,7 +98,7 @@ func (m *MaxMind) GetCity(ip net.IP) (ports.City, error) {
 }
 
 func (m *MaxMind) GetASN(ip net.IP) (ports.ASN, error) {
-	var record ASNRecord
+	var record asnRecord
 	err := m.asnReader.Lookup(ip, &record)
 	if err != nil {
 		return ports.ASN{}, err

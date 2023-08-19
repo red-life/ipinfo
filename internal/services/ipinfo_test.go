@@ -12,6 +12,7 @@ func TestIPInfo_GetInfo(t *testing.T) {
 	maxMind := mocks.IMaxMind{}
 	ip := net.ParseIP("185.143.233.200")
 	expectedInfo := ports.Info{
+		IP: "185.143.233.200",
 		Continent: ports.Continent{
 			Code: "AS",
 			Name: "Asia",
@@ -35,9 +36,9 @@ func TestIPInfo_GetInfo(t *testing.T) {
 	maxMind.EXPECT().GetCity(ip).Return(expectedInfo.City, nil)
 	maxMind.EXPECT().GetASN(ip).Return(expectedInfo.ASN, nil)
 	ipInfo := NewIPInfo(&maxMind)
-	_, err := ipInfo.GetInfo(net.ParseIP("2400:6500:ff00::7af8:f305"))
+	_, err := ipInfo.Info(net.ParseIP("2400:6500:ff00::7af8:f305"), true, true, true, true)
 	assert.NotNil(t, err, "Expected to return an error on IPv6")
-	info, err := ipInfo.GetInfo(ip)
+	info, err := ipInfo.Info(ip, true, true, true, true)
 	assert.Nil(t, err, "Expected to return nil on getting info")
 	assert.Equal(t, expectedInfo, info)
 }

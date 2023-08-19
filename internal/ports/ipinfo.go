@@ -3,12 +3,23 @@ package ports
 import "net"
 
 type Info struct {
-	Continent Continent `json:"continent"`
-	Country   Country   `json:"country"`
-	City      City      `json:"city"`
-	ASN       ASN       `json:"asn"`
+	IP        string    `json:"ip"`
+	Continent Continent `json:"continent,omitempty"`
+	Country   Country   `json:"country,omitempty"`
+	City      City      `json:"city,omitempty"`
+	ASN       ASN       `json:"asn,omitempty"`
+}
+
+type ShortInfo struct {
+	IP           string `json:"ip"`
+	Country      string `json:"country"`
+	Continent    string `json:"continent"`
+	Location     string `json:"location"`
+	Organization string `json:"org"`
+	TimeZone     string `json:"time_zone"`
 }
 
 type IIPInfo interface {
-	GetInfo(ip net.IP) (Info, error)
+	Info(ip net.IP, continent bool, country bool, city bool, asn bool) (Info, error)
+	ShortInfo(ip net.IP) (ShortInfo, error)
 }
