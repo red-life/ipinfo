@@ -10,10 +10,11 @@ import (
 )
 
 func RegisterRoutes(engine *gin.Engine, ipInfoHandler *IPInfoHandler) {
-	engine.GET("/", ValidateIP, ipInfoHandler.Info)
-	engine.GET("/:ip", ValidateIP, ipInfoHandler.Info)
-	engine.GET("/short", ValidateIP, ipInfoHandler.ShortInfo)
-	engine.GET("/:ip/short", ValidateIP, ipInfoHandler.ShortInfo)
+	engine.Use(ValidateIP)
+	engine.GET("/", ipInfoHandler.Info)
+	engine.GET("/:ip", ipInfoHandler.Info)
+	engine.GET("/short", ipInfoHandler.ShortInfo)
+	engine.GET("/:ip/short", ipInfoHandler.ShortInfo)
 }
 
 func NewIPInfoHandler(ipInfoService ports.IIPInfo) *IPInfoHandler {
