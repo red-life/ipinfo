@@ -1,5 +1,5 @@
 # IP Info
-A web application for getting information on an IP address based on MaxMind Database.
+A web application for getting information about an IP address based on MaxMind Database.
 
 ## Technologies and architecture
 - Written in Golang
