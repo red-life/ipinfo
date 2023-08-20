@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  ipinfo_app:
+    build: .
+    volumes:
+      - "${mmdb_files}:/ipinfo/${mmdb_files}"
+      - ".env:/ipinfo/.env"
+    ports:
+      - "${port}:${port}"
