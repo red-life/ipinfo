@@ -1,17 +1,17 @@
 # IP Info
-A web application for getting information of an IP address based on MaxMind Database.\
+A web application for getting information on an IP address based on MaxMind Database.
 
-## Techologies and architecture
-- It's written in golang
-- using Gin framework for http routing and serving
+## Technologies and architecture
+- It's written in Golang
+- using Gin framework for HTTP routing and serving
 - Implemented Hexagonal Architecture and Dependency Injection
 - Unit tested all functionalities
-- Integration tested the http adapter.
+- Integration tested the HTTP adapter.
 - Mocked MaxMind repository and Business Logic
 
 ## Deployment
 - Clone the repository
-- Create an .env file
+- Create a .env file
 ```bash
 mv .env.sample .env
 ```
@@ -26,8 +26,8 @@ make build && make run
 ```
 
 ## Run tests
-First of all generate mocks using `make generate_mocks`. Then you must put ".mmdb" files into internal/adapters/maxmind/tmp.
-Now you can run tests using command below:\
+First of all, generate mocks using `make generate_mocks`. Then you must put ".mmdb" files into internal/adapters/maxmind/tmp.
+Now you can run tests using the command below:\
 `make test`
 
 ## Endpoints
@@ -71,7 +71,7 @@ curl "http://localhost:5000/8.8.8.8/short" | jq
 ```
 
 ## Alias in Terminal
-If you want to get information of an ip just using a command, instead of writing `curl https://localhost:5000`
+If you want to get information about an IP just using a command, instead of writing `curl https://localhost:5000`
 you can just set an alias in your shell configuration file:\
 `alias ipinfo="curl -sk http://localhost:5000/$1/short | jq"`\
 Just put this in your shell configuration file like `~/.bashrc` or `~/.zshrc` and run `source ~/.bashrc(or zshrc)`
