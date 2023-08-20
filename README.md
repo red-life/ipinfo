@@ -31,7 +31,7 @@ Now you can run tests using the command below:\
 `make test`
 
 ## Endpoints
-### /
+- ### /
 <b>METHOD:</b> <i>GET</i>\
 <b>QUERY STRINGS:</b>
 - continent: bool (true|false, default: true)
@@ -44,7 +44,7 @@ Now you can run tests using the command below:\
 ```bash
 curl "http://localhost:5000/" | jq
 ```
-### /:ip
+- ### /:ip
 <b>METHOD:</b> <i>GET</i>\
 <b>QUERY STRINGS:</b> Same as above\
 <b>DESCRIPTION:</b> Returns the full information of the <i>given</i> IP in path parameter\
@@ -52,7 +52,7 @@ curl "http://localhost:5000/" | jq
 ```bash
 curl "http://localhost:5000/8.8.8.8" | jq
 ```
-### /short
+- ### /short
 <b>METHOD:</b> <i>GET</i>\
 <b>QUERY STRINGS:</b> NONE
 <b>DESCRIPTION:</b> Returns the short information of the <i>client</i> IP in path parameter\
@@ -61,7 +61,7 @@ curl "http://localhost:5000/8.8.8.8" | jq
 curl "http://localhost:5000/short" | jq
 ```
 
-### /:ip/short
+- ### /:ip/short
 <b>METHOD:</b> <i>GET</i>\
 <b>QUERY STRINGS:</b> NONE\
 <b>DESCRIPTION:</b> Returns the short information of the <i>given</i> IP in path parameter\
