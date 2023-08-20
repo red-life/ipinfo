@@ -2,8 +2,8 @@
 A web application for getting information on an IP address based on MaxMind Database.
 
 ## Technologies and architecture
-- It's written in Golang
-- using Gin framework for HTTP routing and serving
+- Written in Golang
+- Gin framework for HTTP routing and serving HTTP
 - Implemented Hexagonal Architecture and Dependency Injection
 - Unit tested all functionalities
 - Integration tested the HTTP adapter.
