@@ -73,7 +73,7 @@ curl "http://localhost:5000/8.8.8.8/short" | jq
 ## Alias in Terminal
 If you want to get information about an IP just using a command, instead of writing `curl https://localhost:5000`
 you can just set an alias in your shell configuration file:\
-`alias ipinfo="curl -sk http://localhost:5000/$1/short | jq"`\
+`alias ipinfo=curl -sk "http://localhost:5000/$1/short" | jq`\
 Just put this in your shell configuration file like `~/.bashrc` or `~/.zshrc` and run `source ~/.bashrc(or zshrc)`
 
 
