@@ -2,9 +2,9 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/red-life/ipinfo/internal/pkg/converter"
 	"github.com/red-life/ipinfo/internal/pkg/customerror"
 	"github.com/red-life/ipinfo/internal/ports"
-	"github.com/red-life/ipinfo/internal/utils"
 	"net"
 	"net/http"
 )
@@ -35,10 +35,10 @@ func (I *IPInfoHandler) Info(c *gin.Context) {
 		c.JSON(http.StatusNotFound, response)
 		return
 	}
-	continent := utils.StringToBool(c.DefaultQuery("continent", "true"))
-	country := utils.StringToBool(c.DefaultQuery("country", "true"))
-	city := utils.StringToBool(c.DefaultQuery("city", "true"))
-	asn := utils.StringToBool(c.DefaultQuery("asn", "true"))
+	continent := converter.StringToBool(c.DefaultQuery("continent", "true"))
+	country := converter.StringToBool(c.DefaultQuery("country", "true"))
+	city := converter.StringToBool(c.DefaultQuery("city", "true"))
+	asn := converter.StringToBool(c.DefaultQuery("asn", "true"))
 	info, err := I.ipInfoService.Info(ip.(net.IP), continent, country, city, asn)
 	if err != nil {
 		response["error"] = err.Error()
